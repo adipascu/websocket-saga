@@ -1,0 +1,10 @@
+{
+    "extends": [
+        "airbnb-base",
+        "airbnb-base/rules/strict"
+    ],
+    "env": {
+        "browser": true
+    },
+    "rules": {}
+}
