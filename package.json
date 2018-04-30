@@ -18,7 +18,7 @@
         "url": "https://github.com/adipascu/websocket-saga/issues"
     },
     "homepage": "https://github.com/adipascu/websocket-saga#readme",
-    "optionalDependencies": {
+    "peerDependencies": {
         "redux-saga": "^0.16.0"
     },
     "devDependencies": {
