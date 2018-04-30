@@ -3,14 +3,13 @@ import { take, call, race, fork, cancel } from 'redux-saga/effects';
 import { eventChannel, END, buffers, delay } from 'redux-saga';
 /* eslint-enable import/no-extraneous-dependencies */
 
-
-function watchMessages(socket) {
+function watchMessages(socket, logger) {
   return eventChannel((emit) => {
     function onMessage({ data }) {
       try {
         emit(JSON.parse(data));
       } catch (e) {
-        console.error(`invalid message ${data}`);
+        logger.error(`invalid message ${data}`);
         /* eslint-disable  no-use-before-define */
         onEnd();
         /* eslint-enable  no-use-before-define */
@@ -104,7 +103,7 @@ export default ({
           logger.error('can not send data', e);
         }
       };
-      const socketChannel = yield call(watchMessages, socket);
+      const socketChannel = yield call(watchMessages, socket, logger);
       const data = { heartbeat: Function.prototype };
       const heartbeatChannel = eventChannel((emit) => {
         data.heartbeat = () => emit(false);
