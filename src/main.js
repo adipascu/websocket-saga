@@ -118,7 +118,7 @@ export default ({
         });
       } finally {
         if (onDisconnected !== null) {
-          yield* onDisconnected();
+          yield call(onDisconnected);
         }
         socketChannel.close();
       }
