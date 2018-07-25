@@ -26,9 +26,7 @@ function watchMessages(socket, logger) {
     socket.addEventListener('close', onEnd);
     socket.addEventListener('error', onEnd);
 
-    return () => {
-      socket.close();
-    };
+    return Function.prototype;
   }, buffers.expanding());
 }
 
@@ -93,8 +91,9 @@ export default ({
   heartbeatTimeout = 2000,
 }) => function* socketSaga() {
   while (true) {
+    let socket = null;
     try {
-      const socket = yield openSocket(url);
+      socket = yield openSocket(url);
       const send = (data) => {
         const json = JSON.stringify(data);
         try {
@@ -124,6 +123,11 @@ export default ({
       }
     } catch (e) {
       logger.error('Socket error', e);
+    } finally {
+      if (socket !== null) {
+        socket.close();
+        socket = null;
+      }
     }
     yield delay(2000);
   }
