@@ -1,4 +1,4 @@
-import { take, call, race, fork, cancel } from 'redux-saga/effects';
+import { take, call, race, fork, cancel, cancelled } from 'redux-saga/effects';
 /* eslint-disable import/no-extraneous-dependencies */
 import { eventChannel, END, buffers, delay } from 'redux-saga';
 /* eslint-enable import/no-extraneous-dependencies */
@@ -90,7 +90,7 @@ export default ({
   logger = console,
   heartbeatTimeout = 2000,
 }) => function* socketSaga() {
-  while (true) {
+  while (!(yield cancelled())) {
     let socket = null;
     try {
       socket = yield openSocket(url);
