@@ -1,16 +1,9 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = () => ({
   target: 'electron-renderer',
-  // do not bundle redux-saga
-  externals: {
-    'redux-saga': {
-      commonjs2: 'redux-saga',
-    },
-    'redux-saga/effects': {
-      commonjs2: 'redux-saga/effects',
-    },
-  },
+  externals: [nodeExternals()],
   mode: 'production',
   // mode: 'development',
   // devtool: 'none',
